@@ -64,11 +64,35 @@ namespace SIPSoftSharif.Controllers
             var SIPResult = SipDataEntity.SIPExtensions.Where(s => s.MadadkarId == MadadkarID).FirstOrDefault();
             if (SIPResult == null )
             {
-                var selectedExt = SipDataEntity.SIPExtensions.Where(s => s.MadadkarId == null).FirstOrDefault();
-                selectedExt.MadadkarId = MadadkarID;
-                selectedExt.MadadkarName = identity.Name;
-                selectedExt.RegDate = DateTime.Now;
-                SipDataEntity.SaveChanges();
+                if(SipDataEntity.SIPExtensions.Where(s=>s.MadadkarId==null).Count()==0)
+                {
+                    int max =int.Parse( SipDataEntity.SIPExtensions.OrderByDescending(x=>x.Id).Select(x=>x.DisplayName).FirstOrDefault());
+                    max += 1;
+
+                    var s = new SIPExtensions() {
+                        DisplayName = max.ToString(),
+                        Extention = max,
+                        MadadkarId = MadadkarID,
+                        MadadkarName = identity.Name,
+                        RegDate = DateTime.Now,
+                        Password = System.Web.Security.Membership.GeneratePassword(15,5),
+                        Enabled=false
+
+
+                    
+                    };
+                    SipDataEntity.SIPExtensions.Add(s);
+                    SipDataEntity.SaveChanges();
+
+                }
+                else
+                {
+                    var selectedExt = SipDataEntity.SIPExtensions.Where(s => s.MadadkarId == null).FirstOrDefault();
+                    selectedExt.MadadkarId = MadadkarID;
+                    selectedExt.MadadkarName = identity.Name;
+                    selectedExt.RegDate = DateTime.Now;
+                    SipDataEntity.SaveChanges();
+                }
             }
             SIPResult = SipDataEntity.SIPExtensions.Where(s => s.MadadkarId == MadadkarID).FirstOrDefault();
 
