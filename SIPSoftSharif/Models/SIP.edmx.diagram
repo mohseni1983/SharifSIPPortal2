@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="madadkar_onlineModel.Payment" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="madadkar_onlineModel.PhoneChange" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="madadkar_onlineModel.SIPExtensions" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="madadkar_onlineModel.vw_Payments" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="madadkar_onlineModel.PayRequests" Width="1.5" PointX="7.375" PointY="9" />
         <EntityTypeShape EntityType="madadkar_onlineModel.PaymentDetails" Width="1.5" PointX="9.625" PointY="9.25" />
         <AssociationConnector Association="madadkar_onlineModel.FK_PayRequest" />
@@ -19,6 +18,8 @@
         <EntityTypeShape EntityType="madadkar_onlineModel.ShiftPersons" Width="1.5" PointX="13.875" PointY="1.125" />
         <AssociationConnector Association="madadkar_onlineModel.FK__JobShift__JobId__49C3F6B7" />
         <AssociationConnector Association="madadkar_onlineModel.FK__ShiftPers__Shift__52593CB8" />
+        <EntityTypeShape EntityType="madadkar_onlineModel.HamiEditSet" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="madadkar_onlineModel.HamiMadadjouSet" Width="1.5" PointX="3.875" PointY="9.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

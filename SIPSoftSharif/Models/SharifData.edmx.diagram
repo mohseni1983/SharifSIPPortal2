@@ -4,12 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0adebad067324e88a5564329167e5587" Name="Diagram1" ZoomLevel="95">
+      <Diagram DiagramId="0adebad067324e88a5564329167e5587" Name="Diagram1" ZoomLevel="61">
         <EntityTypeShape EntityType="BpmsSharifDataModel.FG_Madadkars" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BpmsSharifDataModel.FG_HamiMadadjusInfo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BpmsSharifDataModel.FG_HamiMadadkarsInfo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BpmsSharifDataModel.FG_madadkarsInfo" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BpmsSharifDataModel.FG_Hamis" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="BpmsSharifDataModel.FG_MadadjusInfo2" Width="1.5" PointX="8.125" PointY="0.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

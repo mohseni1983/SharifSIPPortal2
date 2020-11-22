@@ -42,5 +42,13 @@ namespace SIPSoftSharif.Models
         public string HamiKey { get; set; }
         public string HamiPassword { get; set; }
         public string Hamistartdate { get; set; }
+        public string HamiNation { get; set; }
+        public Nullable<System.TimeSpan> HamiStartTime { get; set; }
+        public Nullable<System.TimeSpan> HamiEndTime { get; set; }
+        public Nullable<bool> HamiSocial { get; set; }
+        public string HamiTelegram { get; set; }
+        public string HamiInstagram { get; set; }
+        public Nullable<int> HamiKnow { get; set; }
+        public Nullable<int> HamiVolunteer { get; set; }
     }
 }

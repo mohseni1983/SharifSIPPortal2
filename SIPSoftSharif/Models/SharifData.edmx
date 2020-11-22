@@ -37,6 +37,14 @@
           <Property Name="HamiKey" Type="nvarchar" MaxLength="64" />
           <Property Name="HamiPassword" Type="nvarchar" MaxLength="64" />
           <Property Name="Hamistartdate" Type="nvarchar" MaxLength="10" />
+          <Property Name="HamiNation" Type="nvarchar" MaxLength="11" />
+          <Property Name="HamiStartTime" Type="time" Precision="7" />
+          <Property Name="HamiEndTime" Type="time" Precision="7" />
+          <Property Name="HamiSocial" Type="bit" />
+          <Property Name="HamiTelegram" Type="nvarchar" MaxLength="50" />
+          <Property Name="HamiInstagram" Type="nvarchar" MaxLength="50" />
+          <Property Name="HamiKnow" Type="int" />
+          <Property Name="HamiVolunteer" Type="int" />
         </EntityType>
         <EntityType Name="FG_Madadkars">
           <Key>
@@ -118,6 +126,48 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_HamiMadadkarsInfo' does not 
           <Property Name="HamiFName" Type="nvarchar" MaxLength="30" />
           <Property Name="HamiMobile1" Type="nvarchar" MaxLength="15" />
           <Property Name="HamiMobile2" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BpmsSharifData.dbo.FG_MadadjusInfo2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="FG_MadadjusInfo2">
+          <Key>
+            <PropertyRef Name="MadadjuId" />
+          </Key>
+          <Property Name="MadadjuId" Type="int" Nullable="false" />
+          <Property Name="MadadjuCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="MadadjuFName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuLName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuFatherName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuShnasnameh" Type="nvarchar" MaxLength="11" />
+          <Property Name="MadadjuCodemelli" Type="nvarchar" MaxLength="11" />
+          <Property Name="MadadjuBirthdate" Type="nvarchar" MaxLength="10" />
+          <Property Name="MadadjuBirthplace" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuPhone" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuMobile" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuAddress" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuFamilycount" Type="int" />
+          <Property Name="MadadjuDetail" Type="nvarchar" MaxLength="400" />
+          <Property Name="MadadjuConfirm" Type="bit" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="MadadjuName" Type="nvarchar" MaxLength="61" />
+          <Property Name="MadadjuGen" Type="int" />
+          <Property Name="MadadjuSiad" Type="bit" />
+          <Property Name="MadadjuStatusId" Type="int" />
+          <Property Name="MadadjuParentStatusId" Type="int" />
+          <Property Name="MadadjuHomeStatusId" Type="int" />
+          <Property Name="MadadjuLastAction" Type="smalldatetime" />
+          <Property Name="SaveDate" Type="smalldatetime" />
+          <Property Name="MadadjuGenTitle" Type="nvarchar" MaxLength="5" />
+          <Property Name="HomeStatusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MadadjuHomeStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="MadadjuParentStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentStatusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonnelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonnelId" Type="int" />
+          <Property Name="MadadjuStatus" Type="int" />
+          <Property Name="MadadjuTotalPrice" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="MadadjuActive" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -202,6 +252,45 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have
     [FG_HamiMadadkarsInfo].[HamiMobile1] AS [HamiMobile1], 
     [FG_HamiMadadkarsInfo].[HamiMobile2] AS [HamiMobile2]
     FROM [dbo].[FG_HamiMadadkarsInfo] AS [FG_HamiMadadkarsInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FG_MadadjusInfo2" EntityType="Self.FG_MadadjusInfo2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [FG_MadadjusInfo2].[MadadjuId] AS [MadadjuId], 
+    [FG_MadadjusInfo2].[MadadjuCode] AS [MadadjuCode], 
+    [FG_MadadjusInfo2].[MadadjuFName] AS [MadadjuFName], 
+    [FG_MadadjusInfo2].[MadadjuLName] AS [MadadjuLName], 
+    [FG_MadadjusInfo2].[MadadjuFatherName] AS [MadadjuFatherName], 
+    [FG_MadadjusInfo2].[MadadjuShnasnameh] AS [MadadjuShnasnameh], 
+    [FG_MadadjusInfo2].[MadadjuCodemelli] AS [MadadjuCodemelli], 
+    [FG_MadadjusInfo2].[MadadjuBirthdate] AS [MadadjuBirthdate], 
+    [FG_MadadjusInfo2].[MadadjuBirthplace] AS [MadadjuBirthplace], 
+    [FG_MadadjusInfo2].[MadadjuPhone] AS [MadadjuPhone], 
+    [FG_MadadjusInfo2].[MadadjuMobile] AS [MadadjuMobile], 
+    [FG_MadadjusInfo2].[MadadjuAddress] AS [MadadjuAddress], 
+    [FG_MadadjusInfo2].[MadadjuFamilycount] AS [MadadjuFamilycount], 
+    [FG_MadadjusInfo2].[MadadjuDetail] AS [MadadjuDetail], 
+    [FG_MadadjusInfo2].[MadadjuConfirm] AS [MadadjuConfirm], 
+    [FG_MadadjusInfo2].[Deleted] AS [Deleted], 
+    [FG_MadadjusInfo2].[MadadjuName] AS [MadadjuName], 
+    [FG_MadadjusInfo2].[MadadjuGen] AS [MadadjuGen], 
+    [FG_MadadjusInfo2].[MadadjuSiad] AS [MadadjuSiad], 
+    [FG_MadadjusInfo2].[MadadjuStatusId] AS [MadadjuStatusId], 
+    [FG_MadadjusInfo2].[MadadjuParentStatusId] AS [MadadjuParentStatusId], 
+    [FG_MadadjusInfo2].[MadadjuHomeStatusId] AS [MadadjuHomeStatusId], 
+    [FG_MadadjusInfo2].[MadadjuLastAction] AS [MadadjuLastAction], 
+    [FG_MadadjusInfo2].[SaveDate] AS [SaveDate], 
+    [FG_MadadjusInfo2].[MadadjuGenTitle] AS [MadadjuGenTitle], 
+    [FG_MadadjusInfo2].[HomeStatusName] AS [HomeStatusName], 
+    [FG_MadadjusInfo2].[MadadjuHomeStatus] AS [MadadjuHomeStatus], 
+    [FG_MadadjusInfo2].[MadadjuParentStatus] AS [MadadjuParentStatus], 
+    [FG_MadadjusInfo2].[StatusName] AS [StatusName], 
+    [FG_MadadjusInfo2].[ParentStatusName] AS [ParentStatusName], 
+    [FG_MadadjusInfo2].[PersonnelName] AS [PersonnelName], 
+    [FG_MadadjusInfo2].[PersonnelId] AS [PersonnelId], 
+    [FG_MadadjusInfo2].[MadadjuStatus] AS [MadadjuStatus], 
+    [FG_MadadjusInfo2].[MadadjuTotalPrice] AS [MadadjuTotalPrice], 
+    [FG_MadadjusInfo2].[MadadjuActive] AS [MadadjuActive]
+    FROM [dbo].[FG_MadadjusInfo2] AS [FG_MadadjusInfo2]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FG_madadkarsInfo" EntityType="Self.FG_madadkarsInfo" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -372,6 +461,7 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have
           <EntitySet Name="FG_HamiMadadkarsInfo" EntityType="Self.FG_HamiMadadkarsInfo" />
           <EntitySet Name="FG_madadkarsInfo" EntityType="Self.FG_madadkarsInfo" />
           <EntitySet Name="FG_Hamis" EntityType="BpmsSharifDataModel.FG_Hamis" />
+          <EntitySet Name="FG_MadadjusInfo2" EntityType="BpmsSharifDataModel.FG_MadadjusInfo2" />
         </EntityContainer>
         <EntityType Name="FG_Hamis">
           <Key>
@@ -405,6 +495,54 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have
           <Property Name="HamiKey" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HamiPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Hamistartdate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HamiNation" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="HamiStartTime" Type="Time" Precision="7" />
+          <Property Name="HamiEndTime" Type="Time" Precision="7" />
+          <Property Name="HamiSocial" Type="Boolean" />
+          <Property Name="HamiTelegram" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HamiInstagram" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HamiKnow" Type="Int32" />
+          <Property Name="HamiVolunteer" Type="Int32" />
+        </EntityType>
+        <EntityType Name="FG_MadadjusInfo2">
+          <Key>
+            <PropertyRef Name="MadadjuId" />
+          </Key>
+          <Property Name="MadadjuId" Type="Int32" Nullable="false" />
+          <Property Name="MadadjuCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuFName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuLName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuFatherName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuShnasnameh" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuCodemelli" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuBirthdate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuBirthplace" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuMobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuFamilycount" Type="Int32" />
+          <Property Name="MadadjuDetail" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuConfirm" Type="Boolean" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="MadadjuName" Type="String" MaxLength="61" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuGen" Type="Int32" />
+          <Property Name="MadadjuSiad" Type="Boolean" />
+          <Property Name="MadadjuStatusId" Type="Int32" />
+          <Property Name="MadadjuParentStatusId" Type="Int32" />
+          <Property Name="MadadjuHomeStatusId" Type="Int32" />
+          <Property Name="MadadjuLastAction" Type="DateTime" Precision="0" />
+          <Property Name="SaveDate" Type="DateTime" Precision="0" />
+          <Property Name="MadadjuGenTitle" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="HomeStatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuHomeStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuParentStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParentStatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonnelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonnelId" Type="Int32" />
+          <Property Name="MadadjuStatus" Type="Int32" />
+          <Property Name="MadadjuTotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MadadjuActive" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -537,6 +675,14 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have
           <EntitySetMapping Name="FG_Hamis">
             <EntityTypeMapping TypeName="BpmsSharifDataModel.FG_Hamis">
               <MappingFragment StoreEntitySet="FG_Hamis">
+                <ScalarProperty Name="HamiVolunteer" ColumnName="HamiVolunteer" />
+                <ScalarProperty Name="HamiKnow" ColumnName="HamiKnow" />
+                <ScalarProperty Name="HamiInstagram" ColumnName="HamiInstagram" />
+                <ScalarProperty Name="HamiTelegram" ColumnName="HamiTelegram" />
+                <ScalarProperty Name="HamiSocial" ColumnName="HamiSocial" />
+                <ScalarProperty Name="HamiEndTime" ColumnName="HamiEndTime" />
+                <ScalarProperty Name="HamiStartTime" ColumnName="HamiStartTime" />
+                <ScalarProperty Name="HamiNation" ColumnName="HamiNation" />
                 <ScalarProperty Name="Hamistartdate" ColumnName="Hamistartdate" />
                 <ScalarProperty Name="HamiPassword" ColumnName="HamiPassword" />
                 <ScalarProperty Name="HamiKey" ColumnName="HamiKey" />
@@ -565,6 +711,47 @@ warning 6002: The table/view 'BpmsSharifData.dbo.FG_madadkarsInfo' does not have
                 <ScalarProperty Name="HamiConfirm" ColumnName="HamiConfirm" />
                 <ScalarProperty Name="BranchId" ColumnName="BranchId" />
                 <ScalarProperty Name="HamiId" ColumnName="HamiId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FG_MadadjusInfo2">
+            <EntityTypeMapping TypeName="BpmsSharifDataModel.FG_MadadjusInfo2">
+              <MappingFragment StoreEntitySet="FG_MadadjusInfo2">
+                <ScalarProperty Name="MadadjuActive" ColumnName="MadadjuActive" />
+                <ScalarProperty Name="MadadjuTotalPrice" ColumnName="MadadjuTotalPrice" />
+                <ScalarProperty Name="MadadjuStatus" ColumnName="MadadjuStatus" />
+                <ScalarProperty Name="PersonnelId" ColumnName="PersonnelId" />
+                <ScalarProperty Name="PersonnelName" ColumnName="PersonnelName" />
+                <ScalarProperty Name="ParentStatusName" ColumnName="ParentStatusName" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="MadadjuParentStatus" ColumnName="MadadjuParentStatus" />
+                <ScalarProperty Name="MadadjuHomeStatus" ColumnName="MadadjuHomeStatus" />
+                <ScalarProperty Name="HomeStatusName" ColumnName="HomeStatusName" />
+                <ScalarProperty Name="MadadjuGenTitle" ColumnName="MadadjuGenTitle" />
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="MadadjuLastAction" ColumnName="MadadjuLastAction" />
+                <ScalarProperty Name="MadadjuHomeStatusId" ColumnName="MadadjuHomeStatusId" />
+                <ScalarProperty Name="MadadjuParentStatusId" ColumnName="MadadjuParentStatusId" />
+                <ScalarProperty Name="MadadjuStatusId" ColumnName="MadadjuStatusId" />
+                <ScalarProperty Name="MadadjuSiad" ColumnName="MadadjuSiad" />
+                <ScalarProperty Name="MadadjuGen" ColumnName="MadadjuGen" />
+                <ScalarProperty Name="MadadjuName" ColumnName="MadadjuName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="MadadjuConfirm" ColumnName="MadadjuConfirm" />
+                <ScalarProperty Name="MadadjuDetail" ColumnName="MadadjuDetail" />
+                <ScalarProperty Name="MadadjuFamilycount" ColumnName="MadadjuFamilycount" />
+                <ScalarProperty Name="MadadjuAddress" ColumnName="MadadjuAddress" />
+                <ScalarProperty Name="MadadjuMobile" ColumnName="MadadjuMobile" />
+                <ScalarProperty Name="MadadjuPhone" ColumnName="MadadjuPhone" />
+                <ScalarProperty Name="MadadjuBirthplace" ColumnName="MadadjuBirthplace" />
+                <ScalarProperty Name="MadadjuBirthdate" ColumnName="MadadjuBirthdate" />
+                <ScalarProperty Name="MadadjuCodemelli" ColumnName="MadadjuCodemelli" />
+                <ScalarProperty Name="MadadjuShnasnameh" ColumnName="MadadjuShnasnameh" />
+                <ScalarProperty Name="MadadjuFatherName" ColumnName="MadadjuFatherName" />
+                <ScalarProperty Name="MadadjuLName" ColumnName="MadadjuLName" />
+                <ScalarProperty Name="MadadjuFName" ColumnName="MadadjuFName" />
+                <ScalarProperty Name="MadadjuCode" ColumnName="MadadjuCode" />
+                <ScalarProperty Name="MadadjuId" ColumnName="MadadjuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

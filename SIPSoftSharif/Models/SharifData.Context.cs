@@ -30,5 +30,6 @@ namespace SIPSoftSharif.Models
         public virtual DbSet<FG_HamiMadadkarsInfo> FG_HamiMadadkarsInfo { get; set; }
         public virtual DbSet<FG_madadkarsInfo> FG_madadkarsInfo { get; set; }
         public virtual DbSet<FG_Hamis> FG_Hamis { get; set; }
+        public virtual DbSet<FG_MadadjusInfo2> FG_MadadjusInfo2 { get; set; }
     }
 }

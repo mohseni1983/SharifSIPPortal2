@@ -166,6 +166,7 @@
       <DependentUpon>SIP.edmx</DependentUpon>
       <LastGenOutput>SIP.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\SIP.edmx.sql" />
     <Content Include="Models\SIP.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SIP.edmx</DependentUpon>
@@ -177,7 +178,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MadadkarController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,11 +196,20 @@
     <Compile Include="Models\FG_Hamis.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FG_MadadjusInfo2.cs">
+      <DependentUpon>SharifData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FG_Madadkars.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FG_madadkarsInfo.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HamiEditSet.cs">
+      <DependentUpon>SIP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HamiMadadjouSet.cs">
+      <DependentUpon>SIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\JobSchedule.cs">
       <DependentUpon>SIP.tt</DependentUpon>
@@ -296,9 +305,6 @@
     </Compile>
     <Compile Include="Models\UsersInfo.cs">
       <DependentUpon>Sharif.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_Payments.cs">
-      <DependentUpon>SIP.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\MyAuthorizationServerProvider.cs" />

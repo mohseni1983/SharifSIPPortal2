@@ -237,6 +237,111 @@ namespace SIPSoftSharif.Controllers
             // Returing List of Customers Collections  
             return Ok(items);
         }
+        // دریافت اطلاعات حامی جهت ذخیره سازی در جدول موقت
+        [Route("api/Madadkar/GetHamiInfo")]
+       // [Authorize(Roles ="Madadkar")]
+        [HttpPost]
+        public IHttpActionResult GetHamiInfo(int HamiId)
+        {
+            //var identity = (ClaimsIdentity)User.Identity;
+            //var MadadkarId = identity.Claims.Where(s => s.Type == "MadadkarId").FirstOrDefault();
+           // int MadadkarID = int.Parse(MadadkarId.Value);
+            //var MadadkarFullName = identity.Name;
+            HamiEditSet hamiEdit = new HamiEditSet();
+
+
+            try
+            {
+                var result = SipDataEntity.HamiEditSet.FirstOrDefault(a => a.HamiId == HamiId);
+                if (result == null)
+                {
+                    
+                    var request = SharifDataEntity.FG_Hamis.FirstOrDefault(a => a.HamiId == HamiId);
+                    hamiEdit.HamiId = HamiId;
+                    hamiEdit.HamiFname = request.HamiFName??"";
+                    hamiEdit.HamiLname = request.HamiLName??"";
+                    hamiEdit.OldMobile1 = request.HamiMobile1??"";
+                    hamiEdit.OldMobile2 = request.HamiMobile2??"";
+                    hamiEdit.OldPhone1 = request.HamiPhone1??"";
+                    hamiEdit.OldPhone2 = request.HamiPhone2??"";
+                    hamiEdit.Email = request.HamiEmail??"";
+                    SipDataEntity.HamiEditSet.Add(hamiEdit);
+                    SipDataEntity.SaveChanges();
+
+
+                }
+                
+                
+            }
+            catch(Exception err)
+            {
+                throw err;
+            }
+            var res = SipDataEntity.HamiEditSet.FirstOrDefault(a => a.HamiId == HamiId);
+
+            return Ok(res);
+        }
+        //ذخیره اصلاحات مربوط به مشخصات حامی
+        [Route("api/Madadkar/SaveHamiEditInfo")]
+        [HttpPost]
+        public IHttpActionResult SaveHamiEditInfo(HamiEditSet hami)
+        {
+            try
+            {
+                SipDataEntity.HamiEditSet.AddOrUpdate(hami);
+                SipDataEntity.SaveChanges();
+                return Ok("Saved");
+            }catch (Exception err)
+            {
+                throw err;
+            }
+            
+        }
+
+
+        //دریافت اطلاعات کودکان حامی
+        [Route("api/Madadkar/GetHamiMadadjous")]
+        [HttpPost]
+        public IHttpActionResult GetHamiMadadjous(int HamiId)
+        {
+            var result = SipDataEntity.HamiMadadjouSet.Where(a => a.HamiId == HamiId);
+            if (result.Count() <= 0)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        //افزودن کودک برای حامی
+        [Route("api/Madadkar/AddMadadjouToHami")]
+        [HttpPost]
+        public IHttpActionResult AddMadadjouToHami(HamiMadadjouSet hamiMadadjou)
+        {
+            try
+            {
+
+                SipDataEntity.HamiMadadjouSet.AddOrUpdate(hamiMadadjou);
+                SipDataEntity.SaveChanges();
+                return Ok("Saved");
+            }catch (Exception err)
+            {
+                throw err;
+            }
+        }
+        //دریافت لیست کودکان
+        [HttpPost]
+        [Route("api/Madadkar/GetMadadjouList")]
+        public IHttpActionResult GetMadadjouList()
+        {
+            try
+            {
+                var result=SharifDataEntity.FG_MadadjusInfo2.Where(a => a.Deleted == false).Select(x=>new { x.MadadjuId,x.MadadjuFName,x.MadadjuLName});
+                return Ok(result);
+            }catch(Exception err)
+            {
+                throw err;
+            }
+        }
 
         //اصلاح تلفن حامی
         [Route("api/Madadkar/ModifyPhone")]
@@ -524,7 +629,7 @@ namespace SIPSoftSharif.Controllers
         [Route("api/Job/AddShiftForMadadkar")]
         public IHttpActionResult AddShiftForMadadkar(int shiftid,int madadkarId)
         {
-           if(DateTime.Now.Hour>12 || DateTime.Now.Hour < 21)
+           if(DateTime.Now.Hour>=12 && DateTime.Now.Hour <= 21)
             {
                 var result = SipDataEntity.JobShift.Where(x => x.id == shiftid).FirstOrDefault();
                 if (result != null)
@@ -545,12 +650,24 @@ namespace SIPSoftSharif.Controllers
             return NotFound();
         }
 
+        //گرفتن ساعت مجاز
+        [HttpPost]
+        [Route("api/Job/GetClock")]
+        public IHttpActionResult getClock()
+        {
+            if (DateTime.Now.Hour>=12 && DateTime.Now.Hour <= 21)
+            {
+                return Ok(DateTime.Now);
+            }
+            return NotFound();
+        }
+
         //حذف شیفت کاری برای مددکار
         [HttpPost]
         [Route("api/Job/RemoveShiftForMadadkar")]
         public IHttpActionResult RemoveShiftForMadadkar(int shiftid, int madadkarId)
         {
-            if (DateTime.Now.Hour > 12 || DateTime.Now.Hour < 21)
+            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour <= 21)
             {
                 var result = SipDataEntity.JobShift.Where(x => x.id == shiftid).FirstOrDefault();
                 if (result != null)

@@ -33,6 +33,43 @@
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="EndTime" Type="nvarchar" MaxLength="8" />
         </EntityType>
+        <EntityType Name="HamiEditSet">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="HamiId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HamiId" Type="int" Nullable="false" />
+          <Property Name="HamiFname" Type="nvarchar(max)" />
+          <Property Name="HamiLname" Type="nvarchar(max)" />
+          <Property Name="OldMobile1" Type="nvarchar(max)" />
+          <Property Name="NewMobile1" Type="nvarchar(max)" />
+          <Property Name="OldMobile2" Type="nvarchar(max)" />
+          <Property Name="NewMobile2" Type="nvarchar(max)" />
+          <Property Name="OldPhone1" Type="nvarchar(max)" />
+          <Property Name="NewPhone1" Type="nvarchar(max)" />
+          <Property Name="OldPhone2" Type="nvarchar(max)" />
+          <Property Name="NewPhone2" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="NationalCode" Type="nvarchar(max)" />
+          <Property Name="MadadkarId" Type="int" Nullable="false" />
+          <Property Name="MadadkarName" Type="nvarchar(max)" />
+          <Property Name="EditDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HamiMadadjouSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HamiId" Type="int" Nullable="false" />
+          <Property Name="HamiFname" Type="nvarchar(max)" />
+          <Property Name="HamiLname" Type="nvarchar(max)" />
+          <Property Name="MadadjouId" Type="int" Nullable="false" />
+          <Property Name="MadadjouFname" Type="nvarchar(max)" />
+          <Property Name="MadadjouLname" Type="nvarchar(max)" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="AddDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="JobSchedule">
           <Key>
             <PropertyRef Name="id" />
@@ -147,35 +184,6 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <Property Name="RegDate" Type="datetime" />
           <Property Name="Enabled" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="vw_Payments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="UniqeId" Type="nvarchar" MaxLength="50" />
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime" />
-          <Property Name="HamiId" Type="int" />
-          <Property Name="HamiName" Type="nvarchar" MaxLength="50" />
-          <Property Name="MadadkarId" Type="int" />
-          <Property Name="MadadkarName" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="ResNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentDate" Type="datetime" />
-          <Property Name="SettleDate" Type="datetime" />
-          <Property Name="Amount" Type="int" />
-          <Property Name="CardNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="SecurePan" Type="nvarchar" MaxLength="200" />
-          <Property Name="TraceNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="StateCode" Type="int" />
-          <Property Name="State" Type="nvarchar" MaxLength="50" />
-          <Property Name="MadadjouId" Type="int" />
-          <Property Name="MadadjouName" Type="nvarchar" MaxLength="50" />
-          <Property Name="DonationAmount" Type="int" />
-          <Property Name="OptionalDonation" Type="int" />
-          <Property Name="OptionalDescription" Type="nvarchar" MaxLength="50" />
-        </EntityType>
         <Association Name="FK__JobShift__JobId__49C3F6B7">
           <End Role="JobSchedule" Type="Self.JobSchedule" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -219,6 +227,8 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
         <EntityContainer Name="madadkar_onlineModelStoreContainer">
           <EntitySet Name="CalendarEvent" EntityType="Self.CalendarEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CallStatus" EntityType="Self.CallStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HamiEditSet" EntityType="Self.HamiEditSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HamiMadadjouSet" EntityType="Self.HamiMadadjouSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobSchedule" EntityType="Self.JobSchedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobShift" EntityType="Self.JobShift" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -237,34 +247,17 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
     [PaymentDetails].[OptionalDescription] AS [OptionalDescription]
     FROM [dbo].[PaymentDetails] AS [PaymentDetails]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" store:Type="Tables" Schema="dbo">
-         
-          </EntitySet>
-          <EntitySet Name="vw_Payments" EntityType="Self.vw_Payments" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vw_Payments].[UniqeId] AS [UniqeId], 
-    [vw_Payments].[id] AS [id], 
-    [vw_Payments].[CreateDate] AS [CreateDate], 
-    [vw_Payments].[HamiId] AS [HamiId], 
-    [vw_Payments].[HamiName] AS [HamiName], 
-    [vw_Payments].[MadadkarId] AS [MadadkarId], 
-    [vw_Payments].[MadadkarName] AS [MadadkarName], 
-    [vw_Payments].[RefNumber] AS [RefNumber], 
-    [vw_Payments].[ResNumber] AS [ResNumber], 
-    [vw_Payments].[PaymentDate] AS [PaymentDate], 
-    [vw_Payments].[SettleDate] AS [SettleDate], 
-    [vw_Payments].[Amount] AS [Amount], 
-    [vw_Payments].[CardNumber] AS [CardNumber], 
-    [vw_Payments].[SecurePan] AS [SecurePan], 
-    [vw_Payments].[TraceNo] AS [TraceNo], 
-    [vw_Payments].[StateCode] AS [StateCode], 
-    [vw_Payments].[State] AS [State], 
-    [vw_Payments].[MadadjouId] AS [MadadjouId], 
-    [vw_Payments].[MadadjouName] AS [MadadjouName], 
-    [vw_Payments].[DonationAmount] AS [DonationAmount], 
-    [vw_Payments].[OptionalDonation] AS [OptionalDonation], 
-    [vw_Payments].[OptionalDescription] AS [OptionalDescription]
-    FROM [dbo].[vw_Payments] AS [vw_Payments]</DefiningQuery>
+    [SIPExtensions].[Id] AS [Id], 
+    [SIPExtensions].[Extention] AS [Extention], 
+    [SIPExtensions].[DisplayName] AS [DisplayName], 
+    [SIPExtensions].[Password] AS [Password], 
+    [SIPExtensions].[MadadkarId] AS [MadadkarId], 
+    [SIPExtensions].[MadadkarName] AS [MadadkarName], 
+    [SIPExtensions].[RegDate] AS [RegDate], 
+    [SIPExtensions].[Enabled] AS [Enabled]
+    FROM [dbo].[SIPExtensions] AS [SIPExtensions]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__JobShift__JobId__49C3F6B7" Association="Self.FK__JobShift__JobId__49C3F6B7">
             <End Role="JobSchedule" EntitySet="JobSchedule" />
@@ -358,40 +351,12 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
           <Property Name="RegDate" Type="DateTime" Precision="3" />
           <Property Name="Enabled" Type="Boolean" />
         </EntityType>
-        <EntityType Name="vw_Payments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="UniqeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="HamiId" Type="Int32" />
-          <Property Name="HamiName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MadadkarId" Type="Int32" />
-          <Property Name="MadadkarName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
-          <Property Name="SettleDate" Type="DateTime" Precision="3" />
-          <Property Name="Amount" Type="Int32" />
-          <Property Name="CardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SecurePan" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="TraceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateCode" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MadadjouId" Type="Int32" />
-          <Property Name="MadadjouName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DonationAmount" Type="Int32" />
-          <Property Name="OptionalDonation" Type="Int32" />
-          <Property Name="OptionalDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="MadadkarOnlineEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CalendarEvent" EntityType="Self.CalendarEvent" />
           <EntitySet Name="CallStatus" EntityType="Self.CallStatus" />
           <EntitySet Name="Payment" EntityType="Self.Payment" />
           <EntitySet Name="PhoneChange" EntityType="Self.PhoneChange" />
           <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" />
-          <EntitySet Name="vw_Payments" EntityType="Self.vw_Payments" />
           <EntitySet Name="PayRequests" EntityType="madadkar_onlineModel.PayRequests" />
           <EntitySet Name="PaymentDetails" EntityType="madadkar_onlineModel.PaymentDetails" />
           <AssociationSet Name="FK_PayRequest" Association="madadkar_onlineModel.FK_PayRequest">
@@ -409,6 +374,8 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
             <End Role="JobShift" EntitySet="JobShift" />
             <End Role="ShiftPersons" EntitySet="ShiftPersons" />
           </AssociationSet>
+          <EntitySet Name="HamiEditSet" EntityType="madadkar_onlineModel.HamiEditSet" />
+          <EntitySet Name="HamiMadadjouSet" EntityType="madadkar_onlineModel.HamiMadadjouSet" />
           </EntityContainer>
         <EntityType Name="PayRequests">
           <Key>
@@ -519,190 +486,236 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HamiEditSet">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="HamiId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HamiId" Type="Int32" Nullable="false" />
+          <Property Name="HamiFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HamiLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldMobile1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewMobile1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldMobile2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewMobile2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldPhone1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewPhone1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldPhone2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewPhone2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MadadkarId" Type="Int32" Nullable="false" />
+          <Property Name="MadadkarName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HamiMadadjouSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HamiId" Type="Int32" Nullable="false" />
+          <Property Name="HamiFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HamiLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjouId" Type="Int32" Nullable="false" />
+          <Property Name="MadadjouFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjouLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="AddDate" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="madadkar_onlineModelStoreContainer" CdmEntityContainer="MadadkarOnlineEntities">
-          <EntitySetMapping Name="CalendarEvent">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.CalendarEvent">
-              <MappingFragment StoreEntitySet="CalendarEvent">
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="madadkar_onlineModelStoreContainer" CdmEntityContainer="MadadkarOnlineEntities">
+    <EntitySetMapping Name="CalendarEvent">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.CalendarEvent)">
+        <MappingFragment StoreEntitySet="CalendarEvent">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="EventDesciption" ColumnName="EventDesciption" />
+          <ScalarProperty Name="HamiId" ColumnName="HamiId" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="HamiName" ColumnName="HamiName" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CallStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.CallStatus)">
+        <MappingFragment StoreEntitySet="CallStatus">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="MaadadkarName" ColumnName="MaadadkarName" />
+          <ScalarProperty Name="HamiId" ColumnName="HamiId" />
+          <ScalarProperty Name="HamiName" ColumnName="HamiName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payment">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.Payment)">
+        <MappingFragment StoreEntitySet="Payment">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
+          <ScalarProperty Name="ResNumber" ColumnName="ResNumber" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="SettleDate" ColumnName="SettleDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+          <ScalarProperty Name="SecurePan" ColumnName="SecurePan" />
+          <ScalarProperty Name="TraceNo" ColumnName="TraceNo" />
+          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Verified" ColumnName="Verified" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhoneChange">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.PhoneChange)">
+        <MappingFragment StoreEntitySet="PhoneChange">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+          <ScalarProperty Name="HamiId" ColumnName="HamiId" />
+          <ScalarProperty Name="HamiName" ColumnName="HamiName" />
+          <ScalarProperty Name="OldPhoneNumber" ColumnName="OldPhoneNumber" />
+          <ScalarProperty Name="NewPhoneNumber" ColumnName="NewPhoneNumber" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SIPExtensions">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.SIPExtensions)">
+        <MappingFragment StoreEntitySet="SIPExtensions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Extention" ColumnName="Extention" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+          <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayRequests">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.PayRequests)">
+        <MappingFragment StoreEntitySet="PayRequests">
+          <ScalarProperty Name="UniqeId" ColumnName="UniqeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="HamiId" ColumnName="HamiId" />
+          <ScalarProperty Name="HamiName" ColumnName="HamiName" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="PayDescription" ColumnName="PayDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.PaymentDetails)">
+        <MappingFragment StoreEntitySet="PaymentDetails">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+          <ScalarProperty Name="MadadjouId" ColumnName="MadadjouId" />
+          <ScalarProperty Name="MadadjouName" ColumnName="MadadjouName" />
+          <ScalarProperty Name="DonationAmount" ColumnName="DonationAmount" />
+          <ScalarProperty Name="OptionalDonation" ColumnName="OptionalDonation" />
+          <ScalarProperty Name="OptionalDescription" ColumnName="OptionalDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobSchedule">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.JobSchedule)">
+        <MappingFragment StoreEntitySet="JobSchedule">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+          <ScalarProperty Name="RegisterStart" ColumnName="RegisterStart" />
+          <ScalarProperty Name="RegisterEnd" ColumnName="RegisterEnd" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobShift">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.JobShift)">
+        <MappingFragment StoreEntitySet="JobShift">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="ShiftStartTime" ColumnName="ShiftStartTime" />
+          <ScalarProperty Name="ShiftEndTime" ColumnName="ShiftEndTime" />
+          <ScalarProperty Name="ShiftQuantity" ColumnName="ShiftQuantity" />
+          <ScalarProperty Name="ShiftValue" ColumnName="ShiftValue" />
+          <ScalarProperty Name="deleted" ColumnName="deleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShiftPersons">
+      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.ShiftPersons)">
+        <MappingFragment StoreEntitySet="ShiftPersons">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+          <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+          <ScalarProperty Name="EnterTime" ColumnName="EnterTime" />
+          <ScalarProperty Name="ExitTime" ColumnName="ExitTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="HamiEditSet">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.HamiEditSet">
+              <MappingFragment StoreEntitySet="HamiEditSet">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NewPhone2" ColumnName="NewPhone2" />
+                <ScalarProperty Name="OldPhone2" ColumnName="OldPhone2" />
+                <ScalarProperty Name="NewPhone1" ColumnName="NewPhone1" />
+                <ScalarProperty Name="OldPhone1" ColumnName="OldPhone1" />
+                <ScalarProperty Name="NewMobile2" ColumnName="NewMobile2" />
+                <ScalarProperty Name="OldMobile2" ColumnName="OldMobile2" />
+                <ScalarProperty Name="NewMobile1" ColumnName="NewMobile1" />
+                <ScalarProperty Name="OldMobile1" ColumnName="OldMobile1" />
+                <ScalarProperty Name="HamiLname" ColumnName="HamiLname" />
+                <ScalarProperty Name="HamiFname" ColumnName="HamiFname" />
+                <ScalarProperty Name="HamiId" ColumnName="HamiId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="EventDesciption" ColumnName="EventDesciption" />
-                <ScalarProperty Name="HamiId" ColumnName="HamiId" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="HamiName" ColumnName="HamiName" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CallStatus">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.CallStatus">
-              <MappingFragment StoreEntitySet="CallStatus">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="MaadadkarName" ColumnName="MaadadkarName" />
-                <ScalarProperty Name="HamiId" ColumnName="HamiId" />
-                <ScalarProperty Name="HamiName" ColumnName="HamiName" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Payment">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.Payment">
-              <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
-                <ScalarProperty Name="ResNumber" ColumnName="ResNumber" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="SettleDate" ColumnName="SettleDate" />
+          <EntitySetMapping Name="HamiMadadjouSet">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.HamiMadadjouSet">
+              <MappingFragment StoreEntitySet="HamiMadadjouSet">
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-                <ScalarProperty Name="SecurePan" ColumnName="SecurePan" />
-                <ScalarProperty Name="TraceNo" ColumnName="TraceNo" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PhoneChange">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.PhoneChange">
-              <MappingFragment StoreEntitySet="PhoneChange">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-                <ScalarProperty Name="HamiId" ColumnName="HamiId" />
-                <ScalarProperty Name="HamiName" ColumnName="HamiName" />
-                <ScalarProperty Name="OldPhoneNumber" ColumnName="OldPhoneNumber" />
-                <ScalarProperty Name="NewPhoneNumber" ColumnName="NewPhoneNumber" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SIPExtensions">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.SIPExtensions">
-              <MappingFragment StoreEntitySet="SIPExtensions">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Extention" ColumnName="Extention" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
-                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Payments">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.vw_Payments">
-              <MappingFragment StoreEntitySet="vw_Payments">
-                <ScalarProperty Name="UniqeId" ColumnName="UniqeId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="HamiId" ColumnName="HamiId" />
-                <ScalarProperty Name="HamiName" ColumnName="HamiName" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
-                <ScalarProperty Name="ResNumber" ColumnName="ResNumber" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="SettleDate" ColumnName="SettleDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-                <ScalarProperty Name="SecurePan" ColumnName="SecurePan" />
-                <ScalarProperty Name="TraceNo" ColumnName="TraceNo" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="MadadjouLname" ColumnName="MadadjouLname" />
+                <ScalarProperty Name="MadadjouFname" ColumnName="MadadjouFname" />
                 <ScalarProperty Name="MadadjouId" ColumnName="MadadjouId" />
-                <ScalarProperty Name="MadadjouName" ColumnName="MadadjouName" />
-                <ScalarProperty Name="DonationAmount" ColumnName="DonationAmount" />
-                <ScalarProperty Name="OptionalDonation" ColumnName="OptionalDonation" />
-                <ScalarProperty Name="OptionalDescription" ColumnName="OptionalDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PayRequests">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.PayRequests">
-              <MappingFragment StoreEntitySet="PayRequests">
-                <ScalarProperty Name="PayDescription" ColumnName="PayDescription" />
-                <ScalarProperty Name="UniqeId" ColumnName="UniqeId" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="HamiName" ColumnName="HamiName" />
+                <ScalarProperty Name="HamiLname" ColumnName="HamiLname" />
+                <ScalarProperty Name="HamiFname" ColumnName="HamiFname" />
                 <ScalarProperty Name="HamiId" ColumnName="HamiId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaymentDetails">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.PaymentDetails">
-              <MappingFragment StoreEntitySet="PaymentDetails">
-                <ScalarProperty Name="OptionalDescription" ColumnName="OptionalDescription" />
-                <ScalarProperty Name="OptionalDonation" ColumnName="OptionalDonation" />
-                <ScalarProperty Name="DonationAmount" ColumnName="DonationAmount" />
-                <ScalarProperty Name="MadadjouName" ColumnName="MadadjouName" />
-                <ScalarProperty Name="MadadjouId" ColumnName="MadadjouId" />
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobSchedule">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.JobSchedule">
-              <MappingFragment StoreEntitySet="JobSchedule">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RegisterEnd" ColumnName="RegisterEnd" />
-                <ScalarProperty Name="RegisterStart" ColumnName="RegisterStart" />
-                <ScalarProperty Name="JobDate" ColumnName="JobDate" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobShift">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.JobShift">
-              <MappingFragment StoreEntitySet="JobShift">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="ShiftValue" ColumnName="ShiftValue" />
-                <ScalarProperty Name="ShiftQuantity" ColumnName="ShiftQuantity" />
-                <ScalarProperty Name="ShiftEndTime" ColumnName="ShiftEndTime" />
-                <ScalarProperty Name="ShiftStartTime" ColumnName="ShiftStartTime" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShiftPersons">
-            <EntityTypeMapping TypeName="madadkar_onlineModel.ShiftPersons">
-              <MappingFragment StoreEntitySet="ShiftPersons">
-                <ScalarProperty Name="ExitTime" ColumnName="ExitTime" />
-                <ScalarProperty Name="EnterTime" ColumnName="EnterTime" />
-                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -716,7 +729,7 @@ warning 6002: The table/view 'madadkar_online.dbo.vw_Payments' does not have a p
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
