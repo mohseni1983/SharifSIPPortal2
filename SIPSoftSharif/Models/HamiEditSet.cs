@@ -31,5 +31,11 @@ namespace SIPSoftSharif.Models
         public int MadadkarId { get; set; }
         public string MadadkarName { get; set; }
         public Nullable<System.DateTime> EditDate { get; set; }
+        public Nullable<bool> DeleteOldMobile1 { get; set; }
+        public Nullable<bool> DeleteOldMobile2 { get; set; }
+        public Nullable<bool> DeleteOldPhone1 { get; set; }
+        public Nullable<bool> DeleteOldPhone2 { get; set; }
+        public Nullable<bool> TempSave { get; set; }
+        public Nullable<bool> FinalSave { get; set; }
     }
 }

@@ -36,6 +36,38 @@ namespace SIPSoftSharif.Controllers
 
         }
 
+        //دریافت لیست حامیان در نسخه دوم
+        [Authorize(Roles ="Madadkar")]
+        [HttpPost]
+        [Route("api/Madadkar/GetHamisForEdit")]
+        public IHttpActionResult GetHamisForEdit()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var MadadkarId = identity.Claims.Where(s => s.Type == "MadadkarId").FirstOrDefault();
+            int MadadkarID = int.Parse(MadadkarId.Value);
+
+            var result = SharifDataEntity.FG_HamiMadadkarsInfo.Where(x => x.MadadkarId == MadadkarID && x.Deleted != true && x.HamiMobile1 != null && x.HamiMobile1.Contains("09")).OrderBy(r => r.HamiLName);
+            foreach(var item in result)
+            {
+                var search = SipDataEntity.HamiEditSet.FirstOrDefault(x => x.HamiId == item.HamiId);
+                if (search == null)
+                {
+                    HamiEditSet hami = new HamiEditSet();
+                    hami.HamiId = (int)item.HamiId;
+                    hami.HamiFname = item.HamiFName;
+                    hami.HamiLname = item.HamiLName;
+                    hami.OldMobile1 = item.HamiMobile1;
+                    hami.OldMobile2 = item.HamiMobile2 ?? "";
+                    hami.MadadkarId = MadadkarID;
+                    hami.MadadkarName = identity.Name;
+                    SipDataEntity.HamiEditSet.AddOrUpdate(hami);
+                    SipDataEntity.SaveChanges();
+                }
+            }
+            var fresult = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID);
+            return Ok(fresult);
+        }
+
         //دریافت حامی با کد حامی
         [Authorize(Roles = "Madadkar")]
         [HttpPost]

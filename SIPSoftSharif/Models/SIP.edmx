@@ -55,6 +55,12 @@
           <Property Name="MadadkarId" Type="int" Nullable="false" />
           <Property Name="MadadkarName" Type="nvarchar(max)" />
           <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeleteOldMobile1" Type="bit" />
+          <Property Name="DeleteOldMobile2" Type="bit" />
+          <Property Name="DeleteOldPhone1" Type="bit" />
+          <Property Name="DeleteOldPhone2" Type="bit" />
+          <Property Name="TempSave" Type="bit" />
+          <Property Name="FinalSave" Type="bit" />
         </EntityType>
         <EntityType Name="HamiMadadjouSet">
           <Key>
@@ -508,6 +514,12 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <Property Name="MadadkarId" Type="Int32" Nullable="false" />
           <Property Name="MadadkarName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeleteOldMobile1" Type="Boolean" />
+          <Property Name="DeleteOldMobile2" Type="Boolean" />
+          <Property Name="DeleteOldPhone1" Type="Boolean" />
+          <Property Name="DeleteOldPhone2" Type="Boolean" />
+          <Property Name="TempSave" Type="Boolean" />
+          <Property Name="FinalSave" Type="Boolean" />
         </EntityType>
         <EntityType Name="HamiMadadjouSet">
           <Key>
@@ -679,6 +691,12 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <EntitySetMapping Name="HamiEditSet">
             <EntityTypeMapping TypeName="madadkar_onlineModel.HamiEditSet">
               <MappingFragment StoreEntitySet="HamiEditSet">
+                <ScalarProperty Name="FinalSave" ColumnName="FinalSave" />
+                <ScalarProperty Name="TempSave" ColumnName="TempSave" />
+                <ScalarProperty Name="DeleteOldPhone2" ColumnName="DeleteOldPhone2" />
+                <ScalarProperty Name="DeleteOldPhone1" ColumnName="DeleteOldPhone1" />
+                <ScalarProperty Name="DeleteOldMobile2" ColumnName="DeleteOldMobile2" />
+                <ScalarProperty Name="DeleteOldMobile1" ColumnName="DeleteOldMobile1" />
                 <ScalarProperty Name="EditDate" ColumnName="EditDate" />
                 <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
                 <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
