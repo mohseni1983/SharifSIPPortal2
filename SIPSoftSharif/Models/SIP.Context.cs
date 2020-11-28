@@ -29,12 +29,12 @@ namespace SIPSoftSharif.Models
         public virtual DbSet<CallStatus> CallStatus { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<PhoneChange> PhoneChange { get; set; }
-        public virtual DbSet<SIPExtensions> SIPExtensions { get; set; }
         public virtual DbSet<PayRequests> PayRequests { get; set; }
         public virtual DbSet<PaymentDetails> PaymentDetails { get; set; }
         public virtual DbSet<JobSchedule> JobSchedule { get; set; }
         public virtual DbSet<JobShift> JobShift { get; set; }
         public virtual DbSet<ShiftPersons> ShiftPersons { get; set; }
+        public virtual DbSet<SIPExtensions> SIPExtensions { get; set; }
         public virtual DbSet<HamiEditSet> HamiEditSet { get; set; }
         public virtual DbSet<HamiMadadjouSet> HamiMadadjouSet { get; set; }
     }

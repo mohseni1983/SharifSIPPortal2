@@ -15,7 +15,7 @@ namespace SIPSoftSharif.Models
     public partial class SIPExtensions
     {
         public int Id { get; set; }
-        public Nullable<int> Extention { get; set; }
+        public int Extention { get; set; }
         public string DisplayName { get; set; }
         public string Password { get; set; }
         public Nullable<int> MadadkarId { get; set; }

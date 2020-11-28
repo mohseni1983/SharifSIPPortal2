@@ -35,13 +35,14 @@
         </EntityType>
         <EntityType Name="HamiEditSet">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="HamiId" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HamiId" Type="int" Nullable="false" />
           <Property Name="HamiFname" Type="nvarchar(max)" />
+          <Property Name="NewHamiFname" Type="nvarchar(max)" />
           <Property Name="HamiLname" Type="nvarchar(max)" />
+          <Property Name="NewHamiLname" Type="nvarchar(max)" />
           <Property Name="OldMobile1" Type="nvarchar(max)" />
           <Property Name="NewMobile1" Type="nvarchar(max)" />
           <Property Name="OldMobile2" Type="nvarchar(max)" />
@@ -68,8 +69,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HamiId" Type="int" Nullable="false" />
-          <Property Name="HamiFname" Type="nvarchar(max)" />
-          <Property Name="HamiLname" Type="nvarchar(max)" />
           <Property Name="MadadjouId" Type="int" Nullable="false" />
           <Property Name="MadadjouFname" Type="nvarchar(max)" />
           <Property Name="MadadjouLname" Type="nvarchar(max)" />
@@ -175,14 +174,12 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <Property Name="EnterTime" Type="time" Precision="7" />
           <Property Name="ExitTime" Type="time" Precision="7" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SIPExtensions">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Extention" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Extention" Type="int" />
+          <Property Name="Extention" Type="int" Nullable="false" />
           <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="MadadkarId" Type="int" />
@@ -218,6 +215,18 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HamiMadadjouSet_ToTable">
+          <End Role="HamiEditSet" Type="Self.HamiEditSet" Multiplicity="1" />
+          <End Role="HamiMadadjouSet" Type="Self.HamiMadadjouSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HamiEditSet">
+              <PropertyRef Name="HamiId" />
+            </Principal>
+            <Dependent Role="HamiMadadjouSet">
+              <PropertyRef Name="HamiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PayRequest">
           <End Role="PayRequests" Type="Self.PayRequests" Multiplicity="1" />
           <End Role="PaymentDetails" Type="Self.PaymentDetails" Multiplicity="*" />
@@ -241,6 +250,7 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <EntitySet Name="PayRequests" EntityType="Self.PayRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneChange" EntityType="Self.PhoneChange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShiftPersons" EntityType="Self.ShiftPersons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [PaymentDetails].[id] AS [id], 
@@ -253,18 +263,6 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
     [PaymentDetails].[OptionalDescription] AS [OptionalDescription]
     FROM [dbo].[PaymentDetails] AS [PaymentDetails]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [SIPExtensions].[Id] AS [Id], 
-    [SIPExtensions].[Extention] AS [Extention], 
-    [SIPExtensions].[DisplayName] AS [DisplayName], 
-    [SIPExtensions].[Password] AS [Password], 
-    [SIPExtensions].[MadadkarId] AS [MadadkarId], 
-    [SIPExtensions].[MadadkarName] AS [MadadkarName], 
-    [SIPExtensions].[RegDate] AS [RegDate], 
-    [SIPExtensions].[Enabled] AS [Enabled]
-    FROM [dbo].[SIPExtensions] AS [SIPExtensions]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__JobShift__JobId__49C3F6B7" Association="Self.FK__JobShift__JobId__49C3F6B7">
             <End Role="JobSchedule" EntitySet="JobSchedule" />
             <End Role="JobShift" EntitySet="JobShift" />
@@ -272,6 +270,10 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <AssociationSet Name="FK__ShiftPers__Shift__52593CB8" Association="Self.FK__ShiftPers__Shift__52593CB8">
             <End Role="JobShift" EntitySet="JobShift" />
             <End Role="ShiftPersons" EntitySet="ShiftPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HamiMadadjouSet_ToTable" Association="Self.FK_HamiMadadjouSet_ToTable">
+            <End Role="HamiEditSet" EntitySet="HamiEditSet" />
+            <End Role="HamiMadadjouSet" EntitySet="HamiMadadjouSet" />
           </AssociationSet>
           <AssociationSet Name="FK_PayRequest" Association="Self.FK_PayRequest">
             <End Role="PayRequests" EntitySet="PayRequests" />
@@ -344,25 +346,11 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <Property Name="Confirmed" Type="Boolean" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="SIPExtensions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Extention" Type="Int32" />
-          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MadadkarId" Type="Int32" />
-          <Property Name="MadadkarName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RegDate" Type="DateTime" Precision="3" />
-          <Property Name="Enabled" Type="Boolean" />
-        </EntityType>
         <EntityContainer Name="MadadkarOnlineEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CalendarEvent" EntityType="Self.CalendarEvent" />
           <EntitySet Name="CallStatus" EntityType="Self.CallStatus" />
           <EntitySet Name="Payment" EntityType="Self.Payment" />
           <EntitySet Name="PhoneChange" EntityType="Self.PhoneChange" />
-          <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" />
           <EntitySet Name="PayRequests" EntityType="madadkar_onlineModel.PayRequests" />
           <EntitySet Name="PaymentDetails" EntityType="madadkar_onlineModel.PaymentDetails" />
           <AssociationSet Name="FK_PayRequest" Association="madadkar_onlineModel.FK_PayRequest">
@@ -380,8 +368,13 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
             <End Role="JobShift" EntitySet="JobShift" />
             <End Role="ShiftPersons" EntitySet="ShiftPersons" />
           </AssociationSet>
+          <EntitySet Name="SIPExtensions" EntityType="madadkar_onlineModel.SIPExtensions" />
           <EntitySet Name="HamiEditSet" EntityType="madadkar_onlineModel.HamiEditSet" />
           <EntitySet Name="HamiMadadjouSet" EntityType="madadkar_onlineModel.HamiMadadjouSet" />
+          <AssociationSet Name="FK_HamiMadadjouSet_ToTable" Association="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable">
+            <End Role="HamiEditSet" EntitySet="HamiEditSet" />
+            <End Role="HamiMadadjouSet" EntitySet="HamiMadadjouSet" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PayRequests">
           <Key>
@@ -492,15 +485,29 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SIPExtensions">
+          <Key>
+            <PropertyRef Name="Extention" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Extention" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MadadkarId" Type="Int32" />
+          <Property Name="MadadkarName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegDate" Type="DateTime" Precision="3" />
+          <Property Name="Enabled" Type="Boolean" />
+        </EntityType>
         <EntityType Name="HamiEditSet">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="HamiId" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HamiId" Type="Int32" Nullable="false" />
           <Property Name="HamiFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewHamiFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HamiLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewHamiLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OldMobile1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NewMobile1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OldMobile2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -520,6 +527,7 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           <Property Name="DeleteOldPhone2" Type="Boolean" />
           <Property Name="TempSave" Type="Boolean" />
           <Property Name="FinalSave" Type="Boolean" />
+          <NavigationProperty Name="HamiMadadjouSet" Relationship="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable" FromRole="HamiEditSet" ToRole="HamiMadadjouSet" />
         </EntityType>
         <EntityType Name="HamiMadadjouSet">
           <Key>
@@ -527,14 +535,25 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HamiId" Type="Int32" Nullable="false" />
-          <Property Name="HamiFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="HamiLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MadadjouId" Type="Int32" Nullable="false" />
           <Property Name="MadadjouFname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MadadjouLname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Amount" Type="Int32" />
           <Property Name="AddDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HamiEditSet" Relationship="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable" FromRole="HamiMadadjouSet" ToRole="HamiEditSet" />
         </EntityType>
+        <Association Name="FK_HamiMadadjouSet_ToTable">
+          <End Type="madadkar_onlineModel.HamiEditSet" Role="HamiEditSet" Multiplicity="1" />
+          <End Type="madadkar_onlineModel.HamiMadadjouSet" Role="HamiMadadjouSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HamiEditSet">
+              <PropertyRef Name="HamiId" />
+            </Principal>
+            <Dependent Role="HamiMadadjouSet">
+              <PropertyRef Name="HamiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -607,20 +626,6 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SIPExtensions">
-      <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.SIPExtensions)">
-        <MappingFragment StoreEntitySet="SIPExtensions">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Extention" ColumnName="Extention" />
-          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
-          <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
-          <ScalarProperty Name="RegDate" ColumnName="RegDate" />
-          <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PayRequests">
       <EntityTypeMapping TypeName="IsTypeOf(madadkar_onlineModel.PayRequests)">
         <MappingFragment StoreEntitySet="PayRequests">
@@ -688,6 +693,20 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="SIPExtensions">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.SIPExtensions">
+              <MappingFragment StoreEntitySet="SIPExtensions">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Extention" ColumnName="Extention" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HamiEditSet">
             <EntityTypeMapping TypeName="madadkar_onlineModel.HamiEditSet">
               <MappingFragment StoreEntitySet="HamiEditSet">
@@ -710,7 +729,9 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
                 <ScalarProperty Name="OldMobile2" ColumnName="OldMobile2" />
                 <ScalarProperty Name="NewMobile1" ColumnName="NewMobile1" />
                 <ScalarProperty Name="OldMobile1" ColumnName="OldMobile1" />
+                <ScalarProperty Name="NewHamiLname" ColumnName="NewHamiLname" />
                 <ScalarProperty Name="HamiLname" ColumnName="HamiLname" />
+                <ScalarProperty Name="NewHamiFname" ColumnName="NewHamiFname" />
                 <ScalarProperty Name="HamiFname" ColumnName="HamiFname" />
                 <ScalarProperty Name="HamiId" ColumnName="HamiId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -725,8 +746,6 @@ warning 6002: The table/view 'madadkar_online.dbo.SIPExtensions' does not have a
                 <ScalarProperty Name="MadadjouLname" ColumnName="MadadjouLname" />
                 <ScalarProperty Name="MadadjouFname" ColumnName="MadadjouFname" />
                 <ScalarProperty Name="MadadjouId" ColumnName="MadadjouId" />
-                <ScalarProperty Name="HamiLname" ColumnName="HamiLname" />
-                <ScalarProperty Name="HamiFname" ColumnName="HamiFname" />
                 <ScalarProperty Name="HamiId" ColumnName="HamiId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

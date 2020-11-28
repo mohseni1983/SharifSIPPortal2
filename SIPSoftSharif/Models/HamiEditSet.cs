@@ -14,10 +14,18 @@ namespace SIPSoftSharif.Models
     
     public partial class HamiEditSet
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public HamiEditSet()
+        {
+            this.HamiMadadjouSet = new HashSet<HamiMadadjouSet>();
+        }
+    
         public int Id { get; set; }
         public int HamiId { get; set; }
         public string HamiFname { get; set; }
+        public string NewHamiFname { get; set; }
         public string HamiLname { get; set; }
+        public string NewHamiLname { get; set; }
         public string OldMobile1 { get; set; }
         public string NewMobile1 { get; set; }
         public string OldMobile2 { get; set; }
@@ -37,5 +45,8 @@ namespace SIPSoftSharif.Models
         public Nullable<bool> DeleteOldPhone2 { get; set; }
         public Nullable<bool> TempSave { get; set; }
         public Nullable<bool> FinalSave { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HamiMadadjouSet> HamiMadadjouSet { get; set; }
     }
 }

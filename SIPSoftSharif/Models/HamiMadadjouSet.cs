@@ -16,12 +16,12 @@ namespace SIPSoftSharif.Models
     {
         public int Id { get; set; }
         public int HamiId { get; set; }
-        public string HamiFname { get; set; }
-        public string HamiLname { get; set; }
         public int MadadjouId { get; set; }
         public string MadadjouFname { get; set; }
         public string MadadjouLname { get; set; }
         public Nullable<int> Amount { get; set; }
         public Nullable<System.DateTime> AddDate { get; set; }
+    
+        public virtual HamiEditSet HamiEditSet { get; set; }
     }
 }
