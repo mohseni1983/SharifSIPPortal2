@@ -360,6 +360,25 @@ namespace SIPSoftSharif.Controllers
                 throw err;
             }
         }
+
+        //حذف کودک برای حامی
+        [Route("api/Madadkar/RemoveMadadjouToHami")]
+        [HttpPost]
+        public IHttpActionResult removeMadadjouToHami(HamiMadadjouSet hamiMadadjou)
+        {
+            try
+            {
+
+                SipDataEntity.HamiMadadjouSet.Remove(hamiMadadjou);
+                SipDataEntity.SaveChanges();
+                return Ok("Saved");
+            }
+            catch (Exception err)
+            {
+                throw err;
+            }
+        }
+
         //دریافت لیست کودکان
         [HttpPost]
         [Route("api/Madadkar/GetMadadjouList")]
