@@ -21,6 +21,7 @@ namespace SIPSoftSharif.Models
         public string MadadjouLname { get; set; }
         public Nullable<int> Amount { get; set; }
         public Nullable<System.DateTime> AddDate { get; set; }
+        public Nullable<bool> Deleted { get; set; }
     
         public virtual HamiEditSet HamiEditSet { get; set; }
     }

@@ -74,6 +74,7 @@
           <Property Name="MadadjouLname" Type="nvarchar(max)" />
           <Property Name="Amount" Type="int" />
           <Property Name="AddDate" Type="datetime" />
+          <Property Name="Deleted" Type="bit" />
         </EntityType>
         <EntityType Name="JobSchedule">
           <Key>
@@ -216,7 +217,9 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HamiMadadjouSet_ToTable">
-          <End Role="HamiEditSet" Type="Self.HamiEditSet" Multiplicity="1" />
+          <End Role="HamiEditSet" Type="Self.HamiEditSet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HamiMadadjouSet" Type="Self.HamiMadadjouSet" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HamiEditSet">
@@ -541,9 +544,12 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <Property Name="Amount" Type="Int32" />
           <Property Name="AddDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="HamiEditSet" Relationship="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable" FromRole="HamiMadadjouSet" ToRole="HamiEditSet" />
+          <Property Name="Deleted" Type="Boolean" />
         </EntityType>
         <Association Name="FK_HamiMadadjouSet_ToTable">
-          <End Type="madadkar_onlineModel.HamiEditSet" Role="HamiEditSet" Multiplicity="1" />
+          <End Type="madadkar_onlineModel.HamiEditSet" Role="HamiEditSet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="madadkar_onlineModel.HamiMadadjouSet" Role="HamiMadadjouSet" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HamiEditSet">
@@ -741,6 +747,7 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <EntitySetMapping Name="HamiMadadjouSet">
             <EntityTypeMapping TypeName="madadkar_onlineModel.HamiMadadjouSet">
               <MappingFragment StoreEntitySet="HamiMadadjouSet">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="AddDate" ColumnName="AddDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="MadadjouLname" ColumnName="MadadjouLname" />

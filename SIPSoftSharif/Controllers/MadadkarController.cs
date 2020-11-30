@@ -37,7 +37,7 @@ namespace SIPSoftSharif.Controllers
         }
 
         //دریافت لیست حامیان در نسخه دوم
-        [Authorize(Roles ="Madadkar")]
+       [Authorize(Roles ="Madadkar")]
         [HttpPost]
         [Route("api/Madadkar/GetHamisForEdit")]
         public IHttpActionResult GetHamisForEdit()
@@ -45,7 +45,7 @@ namespace SIPSoftSharif.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var MadadkarId = identity.Claims.Where(s => s.Type == "MadadkarId").FirstOrDefault();
             int MadadkarID = int.Parse(MadadkarId.Value);
-
+            //int MadadkarID = 230;
             var result = SharifDataEntity.FG_HamiMadadkarsInfo.Where(x => x.MadadkarId == MadadkarID && x.Deleted != true && x.HamiMobile1 != null && x.HamiMobile1.Contains("09")).OrderBy(r => r.HamiLName);
             foreach(var item in result)
             {
@@ -65,11 +65,43 @@ namespace SIPSoftSharif.Controllers
                 }
             }
             var fresult = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID);
-            return Ok(fresult);
+            var res = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID).Select(d => new
+            {
+                d.Id,
+                d.HamiId,
+                d.HamiFname,
+                d.HamiLname,
+                d.MadadkarId,
+                d.MadadkarName,
+                d.NationalCode,
+                d.NewHamiFname,
+                d.NewHamiLname,
+                d.NewMobile1,
+                d.NewMobile2,
+                d.NewPhone1,
+                d.NewPhone2,
+                d.OldMobile1,
+                d.OldMobile2,
+                d.OldPhone1,
+                d.OldPhone2,
+                d.TempSave,
+                d.DeleteOldMobile1,
+                d.DeleteOldMobile2,
+                d.DeleteOldPhone1,
+                d.DeleteOldPhone2,
+                d.EditDate,
+                d.Email,
+                d.FinalSave,
+                HamiMadadjouSet = SipDataEntity.HamiMadadjouSet.Where(f => f.Deleted != true && f.HamiId == d.HamiId).Select(
+                    t => new { t.HamiId, t.Id, t.MadadjouFname, t.MadadjouLname, t.MadadjouId, t.Deleted }
+                    ).ToList()
+
+            }).ToList();
+            return Ok(res);
         }
 
         //دریافت حامی با کد حامی
-        [Authorize(Roles = "Madadkar")]
+       [Authorize(Roles = "Madadkar")]
         [HttpPost]
         [Route("api/Madadkar/GetHamisById")]
         public IHttpActionResult GetHamisById(int hamiId)
@@ -79,6 +111,7 @@ namespace SIPSoftSharif.Controllers
             int MadadkarID = int.Parse(MadadkarId.Value);
 
             var result = SharifDataEntity.FG_HamiMadadkarsInfo.Where(x => x.MadadkarId == MadadkarID && x.Deleted != true && x.HamiId == hamiId).FirstOrDefault();
+            
             return Json(result);
 
         }
@@ -309,7 +342,15 @@ namespace SIPSoftSharif.Controllers
             {
                 throw err;
             }
-            var res = SipDataEntity.HamiEditSet.FirstOrDefault(a => a.HamiId == HamiId);
+            var res = SipDataEntity.HamiEditSet.Where(x => x.HamiId == HamiId).Select(d=> new { d.Id,d.HamiId,d.HamiFname,d.HamiLname,d.MadadkarId,d.MadadkarName,d.NationalCode,
+                d.NewHamiFname,d.NewHamiLname,d.NewMobile1,d.NewMobile2,d.NewPhone1,d.NewPhone2,d.OldMobile1,d.OldMobile2,d.OldPhone1,d.OldPhone2,d.TempSave,d.DeleteOldMobile1,d.DeleteOldMobile2,
+                d.DeleteOldPhone1,d.DeleteOldPhone2,d.EditDate,d.Email,d.FinalSave,HamiMadadjouSet=SipDataEntity.HamiMadadjouSet.Where(f=>f.Deleted!=true && f.HamiId==HamiId).Select(
+                    t=>new {t.HamiId,t.Id,t.MadadjouFname,t.MadadjouLname,t.MadadjouId,t.Deleted }
+                    ).ToList()
+            
+            }).FirstOrDefault();
+            
+            
 
             return Ok(res);
         }
@@ -336,7 +377,7 @@ namespace SIPSoftSharif.Controllers
         [HttpPost]
         public IHttpActionResult GetHamiMadadjous(int HamiId)
         {
-            var result = SipDataEntity.HamiMadadjouSet.Where(a => a.HamiId == HamiId);
+            var result = SipDataEntity.HamiMadadjouSet.Where(a => a.HamiId == HamiId && a.Deleted==false);
             if (result.Count() <= 0)
             {
                 return NotFound();
@@ -366,16 +407,18 @@ namespace SIPSoftSharif.Controllers
         [HttpPost]
         public IHttpActionResult removeMadadjouToHami(HamiMadadjouSet hamiMadadjou)
         {
+            //var hamiResult = SipDataEntity.HamiEditSet.FirstOrDefault(x=>x.HamiId==hamiMadadjou.HamiId).HamiMadadjouSet.FirstOrDefault(r=>r.Id==hamiMadadjou.Id);
+            //var madadjouResult = hamiResult.HamiMadadjouSet.FirstOrDefault(x => x.MadadjouId == hamiMadadjou.MadadjouId);
             try
             {
-
-                SipDataEntity.HamiMadadjouSet.Remove(hamiMadadjou);
+                var result = SipDataEntity.HamiMadadjouSet.FirstOrDefault(x => x.Id == hamiMadadjou.Id);
+                result.Deleted = true;
                 SipDataEntity.SaveChanges();
-                return Ok("Saved");
+                return Ok("deleted");
+
             }
-            catch (Exception err)
-            {
-                throw err;
+            catch (Exception er) { 
+            throw er;
             }
         }
 
