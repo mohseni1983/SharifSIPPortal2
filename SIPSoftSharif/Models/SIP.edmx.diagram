@@ -21,6 +21,9 @@
         <EntityTypeShape EntityType="madadkar_onlineModel.HamiEditSet" Width="1.5" PointX="0.75" PointY="10.125" />
         <EntityTypeShape EntityType="madadkar_onlineModel.HamiMadadjouSet" Width="1.5" PointX="3" PointY="11.875" />
         <AssociationConnector Association="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable" />
+        <EntityTypeShape EntityType="madadkar_onlineModel.JobShifts" Width="1.5" PointX="9.375" PointY="4.75" />
+        <EntityTypeShape EntityType="madadkar_onlineModel.JobShiftsView" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="madadkar_onlineModel.settings" Width="1.5" PointX="12.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -45,6 +45,8 @@ namespace SIPSoftSharif.Models
         public Nullable<bool> DeleteOldPhone2 { get; set; }
         public Nullable<bool> TempSave { get; set; }
         public Nullable<bool> FinalSave { get; set; }
+        public Nullable<bool> Deleted { get; set; }
+        public string DeleteCuase { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HamiMadadjouSet> HamiMadadjouSet { get; set; }

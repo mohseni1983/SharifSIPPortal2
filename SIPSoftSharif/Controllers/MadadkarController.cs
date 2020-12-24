@@ -46,7 +46,7 @@ namespace SIPSoftSharif.Controllers
             var MadadkarId = identity.Claims.Where(s => s.Type == "MadadkarId").FirstOrDefault();
             int MadadkarID = int.Parse(MadadkarId.Value);
             //int MadadkarID = 230;
-            var result = SharifDataEntity.FG_HamiMadadkarsInfo.Where(x => x.MadadkarId == MadadkarID && x.Deleted != true && x.HamiMobile1 != null && x.HamiMobile1.Contains("09")).OrderBy(r => r.HamiLName);
+            var result = SharifDataEntity.FG_HamiMadadkarsInfo.Where(x => x.MadadkarId == MadadkarID && x.Deleted != true && x.HamiMobile1 != null ).OrderBy(r => r.HamiLName);
             foreach(var item in result)
             {
                 var search = SipDataEntity.HamiEditSet.FirstOrDefault(x => x.HamiId == item.HamiId);
@@ -65,7 +65,7 @@ namespace SIPSoftSharif.Controllers
                 }
             }
             var fresult = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID);
-            var res = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID).Select(d => new
+            var res = SipDataEntity.HamiEditSet.Where(x => x.MadadkarId == MadadkarID && x.Deleted!=true).Select(d => new
             {
                 d.Id,
                 d.HamiId,
@@ -99,6 +99,32 @@ namespace SIPSoftSharif.Controllers
             }).ToList();
             return Ok(res);
         }
+
+        //حذف حامی در نسخه دوم
+        [HttpPost]
+        [Route("api/Madadkar/DeleteHamiById")]
+        public IHttpActionResult DeleteHamiById(deleteHami deleteHami)
+        {
+            var result = SipDataEntity.HamiEditSet.FirstOrDefault(x => x.HamiId == deleteHami.HamiId);
+            try
+            {
+                result.Deleted = true;
+                result.DeleteCuase = deleteHami.deleteCuase;
+                SipDataEntity.SaveChanges();
+                return Ok("Deleted " + deleteHami.HamiId);
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+            
+        }
+
+        public class deleteHami
+        {
+            public int HamiId { get; set; }
+            public string deleteCuase { get; set; }
+        }
+
 
         //دریافت حامی با کد حامی
        [Authorize(Roles = "Madadkar")]
@@ -706,6 +732,8 @@ namespace SIPSoftSharif.Controllers
 
         }
 
+
+        //دریافت اطلاعات یک شیفت برای ادمین
         [HttpPost]
         [Route("api/Job/GetShiftById")]
         public IHttpActionResult GetShiftById(int ShiftId)
@@ -717,6 +745,46 @@ namespace SIPSoftSharif.Controllers
                 return Ok(result);
             return NotFound();
         }
+        
+        //چک کردن تعداد شیفت های مددکار در ماه جاری
+        [HttpPost]
+        [Route("api/Job/GetMadadkarShiftsCount")]
+        public IHttpActionResult getMadadkarShiftCount(int madadkar_id)
+        {
+            var today = DateTime.Now;
+            DateTime start_date;
+            DateTime end_date;
+
+            PersianCalendar pc = new PersianCalendar();
+            var shamsi_month = pc.GetMonth(today);
+            var shamsi_year = pc.GetYear(today);
+            if (shamsi_month > 6)
+            {
+                end_date = pc.ToDateTime(shamsi_year, shamsi_month, 30,23,59,59,00);
+            }
+            else
+            {
+                end_date = pc.ToDateTime(shamsi_year, shamsi_month, 31, 23, 59, 59, 0);
+
+            }
+            start_date= pc.ToDateTime(shamsi_year, shamsi_month, 1, 0, 0, 0, 0);
+
+            var result = SipDataEntity.JobShiftsView.Where(x=>x.MadadkarId==madadkar_id && x.JobDate>=start_date && x.JobDate<=end_date).ToList();
+            var allowed = SipDataEntity.settings.FirstOrDefault(x => x.setting_name == "allowed_shifts_in_month");
+            MadadkarShiftsInfo info = new MadadkarShiftsInfo() {
+                AllowedShiftsInMonth = Int32.Parse(allowed.setting_value ?? "10"),
+                ShiftListInMonth = result
+            };
+
+            return Ok(info);
+        }
+
+        class MadadkarShiftsInfo
+        {
+            public int AllowedShiftsInMonth { get; set; }
+            public ICollection<JobShiftsView> ShiftListInMonth { get; set; }
+        }
+
 
         //رزرو شیفت کاری برا ی مددکار
         [HttpPost]

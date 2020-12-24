@@ -37,5 +37,8 @@ namespace SIPSoftSharif.Models
         public virtual DbSet<SIPExtensions> SIPExtensions { get; set; }
         public virtual DbSet<HamiEditSet> HamiEditSet { get; set; }
         public virtual DbSet<HamiMadadjouSet> HamiMadadjouSet { get; set; }
+        public virtual DbSet<JobShifts> JobShifts { get; set; }
+        public virtual DbSet<JobShiftsView> JobShiftsView { get; set; }
+        public virtual DbSet<settings> settings { get; set; }
     }
 }

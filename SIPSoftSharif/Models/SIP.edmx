@@ -62,6 +62,8 @@
           <Property Name="DeleteOldPhone2" Type="bit" />
           <Property Name="TempSave" Type="bit" />
           <Property Name="FinalSave" Type="bit" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="DeleteCuase" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="HamiMadadjouSet">
           <Key>
@@ -164,6 +166,14 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <Property Name="Confirmed" Type="bit" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="setting_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="setting_value" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="ShiftPersons">
           <Key>
             <PropertyRef Name="id" />
@@ -187,6 +197,39 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <Property Name="MadadkarName" Type="nvarchar" MaxLength="50" />
           <Property Name="RegDate" Type="datetime" />
           <Property Name="Enabled" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'madadkar_online.dbo.JobShifts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JobShifts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="JobDate" Type="date" />
+          <Property Name="ShiftStartTime" Type="time" Precision="7" />
+          <Property Name="ShiftEndTime" Type="time" Precision="7" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="ShiftQuantity" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JobShiftsView">
+          <Key>
+            <PropertyRef Name="MadadkarName" />
+            <PropertyRef Name="MadadkarId" />
+            <PropertyRef Name="ShiftId" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="JobDate" Type="date" />
+          <Property Name="ShiftStartTime" Type="time" Precision="7" />
+          <Property Name="ShiftEndTime" Type="time" Precision="7" />
+          <Property Name="MadadkarName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EnterTime" Type="time" Precision="7" />
+          <Property Name="ExitTime" Type="time" Precision="7" />
+          <Property Name="MadadkarId" Type="int" Nullable="false" />
+          <Property Name="ShiftId" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__JobShift__JobId__49C3F6B7">
           <End Role="JobSchedule" Type="Self.JobSchedule" Multiplicity="0..1">
@@ -252,6 +295,7 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayRequests" EntityType="Self.PayRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneChange" EntityType="Self.PhoneChange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="settings" EntityType="Self.settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShiftPersons" EntityType="Self.ShiftPersons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SIPExtensions" EntityType="Self.SIPExtensions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentDetails" EntityType="Self.PaymentDetails" store:Type="Tables" store:Schema="dbo">
@@ -265,6 +309,29 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
     [PaymentDetails].[OptionalDonation] AS [OptionalDonation], 
     [PaymentDetails].[OptionalDescription] AS [OptionalDescription]
     FROM [dbo].[PaymentDetails] AS [PaymentDetails]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="JobShifts" EntityType="Self.JobShifts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JobShifts].[JobDate] AS [JobDate], 
+    [JobShifts].[ShiftStartTime] AS [ShiftStartTime], 
+    [JobShifts].[ShiftEndTime] AS [ShiftEndTime], 
+    [JobShifts].[id] AS [id], 
+    [JobShifts].[ShiftQuantity] AS [ShiftQuantity]
+    FROM [dbo].[JobShifts] AS [JobShifts]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="JobShiftsView" EntityType="Self.JobShiftsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JobShiftsView].[JobDate] AS [JobDate], 
+    [JobShiftsView].[ShiftStartTime] AS [ShiftStartTime], 
+    [JobShiftsView].[ShiftEndTime] AS [ShiftEndTime], 
+    [JobShiftsView].[MadadkarName] AS [MadadkarName], 
+    [JobShiftsView].[EnterTime] AS [EnterTime], 
+    [JobShiftsView].[ExitTime] AS [ExitTime], 
+    [JobShiftsView].[MadadkarId] AS [MadadkarId], 
+    [JobShiftsView].[ShiftId] AS [ShiftId], 
+    [JobShiftsView].[id] AS [id], 
+    [JobShiftsView].[Expr1] AS [Expr1]
+    FROM [dbo].[JobShiftsView] AS [JobShiftsView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__JobShift__JobId__49C3F6B7" Association="Self.FK__JobShift__JobId__49C3F6B7">
             <End Role="JobSchedule" EntitySet="JobSchedule" />
@@ -378,6 +445,9 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
             <End Role="HamiEditSet" EntitySet="HamiEditSet" />
             <End Role="HamiMadadjouSet" EntitySet="HamiMadadjouSet" />
           </AssociationSet>
+          <EntitySet Name="JobShifts" EntityType="madadkar_onlineModel.JobShifts" />
+          <EntitySet Name="JobShiftsView" EntityType="madadkar_onlineModel.JobShiftsView" />
+          <EntitySet Name="settings" EntityType="madadkar_onlineModel.settings" />
           </EntityContainer>
         <EntityType Name="PayRequests">
           <Key>
@@ -531,6 +601,8 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <Property Name="TempSave" Type="Boolean" />
           <Property Name="FinalSave" Type="Boolean" />
           <NavigationProperty Name="HamiMadadjouSet" Relationship="madadkar_onlineModel.FK_HamiMadadjouSet_ToTable" FromRole="HamiEditSet" ToRole="HamiMadadjouSet" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DeleteCuase" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="HamiMadadjouSet">
           <Key>
@@ -560,6 +632,43 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JobShifts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="JobDate" Type="DateTime" Precision="0" />
+          <Property Name="ShiftStartTime" Type="Time" Precision="7" />
+          <Property Name="ShiftEndTime" Type="Time" Precision="7" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="ShiftQuantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="JobShiftsView">
+          <Key>
+            <PropertyRef Name="MadadkarName" />
+            <PropertyRef Name="MadadkarId" />
+            <PropertyRef Name="ShiftId" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="JobDate" Type="DateTime" Precision="0" />
+          <Property Name="ShiftStartTime" Type="Time" Precision="7" />
+          <Property Name="ShiftEndTime" Type="Time" Precision="7" />
+          <Property Name="MadadkarName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EnterTime" Type="Time" Precision="7" />
+          <Property Name="ExitTime" Type="Time" Precision="7" />
+          <Property Name="MadadkarId" Type="Int32" Nullable="false" />
+          <Property Name="ShiftId" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="setting_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="setting_value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -716,6 +825,8 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
           <EntitySetMapping Name="HamiEditSet">
             <EntityTypeMapping TypeName="madadkar_onlineModel.HamiEditSet">
               <MappingFragment StoreEntitySet="HamiEditSet">
+                <ScalarProperty Name="DeleteCuase" ColumnName="DeleteCuase" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="FinalSave" ColumnName="FinalSave" />
                 <ScalarProperty Name="TempSave" ColumnName="TempSave" />
                 <ScalarProperty Name="DeleteOldPhone2" ColumnName="DeleteOldPhone2" />
@@ -755,6 +866,42 @@ warning 6002: The table/view 'madadkar_online.dbo.PaymentDetails' does not have 
                 <ScalarProperty Name="MadadjouId" ColumnName="MadadjouId" />
                 <ScalarProperty Name="HamiId" ColumnName="HamiId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobShifts">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.JobShifts">
+              <MappingFragment StoreEntitySet="JobShifts">
+                <ScalarProperty Name="ShiftQuantity" ColumnName="ShiftQuantity" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ShiftEndTime" ColumnName="ShiftEndTime" />
+                <ScalarProperty Name="ShiftStartTime" ColumnName="ShiftStartTime" />
+                <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobShiftsView">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.JobShiftsView">
+              <MappingFragment StoreEntitySet="JobShiftsView">
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />
+                <ScalarProperty Name="ExitTime" ColumnName="ExitTime" />
+                <ScalarProperty Name="EnterTime" ColumnName="EnterTime" />
+                <ScalarProperty Name="MadadkarName" ColumnName="MadadkarName" />
+                <ScalarProperty Name="ShiftEndTime" ColumnName="ShiftEndTime" />
+                <ScalarProperty Name="ShiftStartTime" ColumnName="ShiftStartTime" />
+                <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="madadkar_onlineModel.settings">
+              <MappingFragment StoreEntitySet="settings">
+                <ScalarProperty Name="setting_value" ColumnName="setting_value" />
+                <ScalarProperty Name="setting_name" ColumnName="setting_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
