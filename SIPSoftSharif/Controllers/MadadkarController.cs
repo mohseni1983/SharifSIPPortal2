@@ -643,8 +643,7 @@ namespace SIPSoftSharif.Controllers
 
             var result = SipDataEntity.JobSchedule.Where(x => x.JobDate == nowdate ).FirstOrDefault();
             if(result!=null)
-            
-            return Ok(result);
+               return Ok(result);
             return NotFound();
         }
 

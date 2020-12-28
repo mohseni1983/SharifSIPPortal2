@@ -100,7 +100,7 @@ namespace SIPSoftSharif.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/v2/hami/DeleteHamiById")]
-        public IHttpActionResult DeleteHamiById(deleteHami deleteHami)
+        public IHttpActionResult DeleteHamiById(deleteHamicls deleteHami)
         {
             var result = SipDataEntity.HamiEditSet.FirstOrDefault(x => x.HamiId == deleteHami.HamiId);
             try
@@ -117,7 +117,7 @@ namespace SIPSoftSharif.Controllers
 
         }
 
-        public class deleteHami
+        public class deleteHamicls
         {
             public int HamiId { get; set; }
             public string deleteCuase { get; set; }

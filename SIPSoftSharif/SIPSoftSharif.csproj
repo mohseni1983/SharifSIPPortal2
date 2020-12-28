@@ -202,11 +202,11 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <None Include="Controllers\HamiController.cs.back" />
+    <Compile Include="Controllers\HamiController.cs" />
     <Compile Include="Controllers\MadadjouController.cs" />
     <Compile Include="Controllers\MadadkarController.cs" />
     <Compile Include="Controllers\ReserveController.cs" />
-    <None Include="Controllers\SipPhoneController.cs.back" />
+    <Compile Include="Controllers\SipPhoneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

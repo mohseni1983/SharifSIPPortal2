@@ -158,7 +158,7 @@ namespace SIPSoftSharif.Controllers
         [Route("api/v2/Shifts/Madadkar/AddShiftForMadadkar")]
         public IHttpActionResult AddShiftForMadadkar(int shiftid, int madadkarId)
         {
-            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour <= 21)
+            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 14 || DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 21)
             {
                 var result = SipDataEntity.JobShift.Where(x => x.id == shiftid).FirstOrDefault();
                 if (result != null)
@@ -189,7 +189,7 @@ namespace SIPSoftSharif.Controllers
         [Route("api/v2/Shifts/Madadkar/RemoveShiftForMadadkar")]
         public IHttpActionResult RemoveShiftForMadadkar(int shiftid, int madadkarId)
         {
-            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour <= 21)
+            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 14 || DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 21)
             {
                 var result = SipDataEntity.JobShift.Where(x => x.id == shiftid).FirstOrDefault();
                 if (result != null)
@@ -219,7 +219,7 @@ namespace SIPSoftSharif.Controllers
         [Route("api/v2/Shifts/Madadkar/GetClock")]
         public IHttpActionResult getClock()
         {
-            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour <= 21)
+            if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 14 || DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 21)
             {
                 return Ok(DateTime.Now);
             }

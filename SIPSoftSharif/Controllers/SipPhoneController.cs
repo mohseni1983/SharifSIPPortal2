@@ -32,8 +32,8 @@ namespace SIPSoftSharif.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Madadkar")]
-        [Route("api/v2/SipPhone/AddCallResults")]
-        public IHttpActionResult AddCallResults(callStatusInput call)
+        [Route("api/v2/SipPhone/AddCallForResults")]
+        public IHttpActionResult setCallResults(callStatusInput2 call)
 
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -67,7 +67,7 @@ namespace SIPSoftSharif.Controllers
             //return NotFound()
 
         }
-        public class callStatusInput
+        public class callStatusInput2
         {
             public int HamiId { get; set; }
             public string dateof { get; set; }
