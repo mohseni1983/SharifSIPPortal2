@@ -216,9 +216,8 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
           <Key>
             <PropertyRef Name="MadadkarName" />
             <PropertyRef Name="MadadkarId" />
-            <PropertyRef Name="ShiftId" />
             <PropertyRef Name="id" />
-            <PropertyRef Name="Expr1" />
+            <PropertyRef Name="ShiftId" />
           </Key>
           <Property Name="JobDate" Type="date" />
           <Property Name="ShiftStartTime" Type="time" Precision="7" />
@@ -227,9 +226,9 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
           <Property Name="EnterTime" Type="time" Precision="7" />
           <Property Name="ExitTime" Type="time" Precision="7" />
           <Property Name="MadadkarId" Type="int" Nullable="false" />
-          <Property Name="ShiftId" Type="int" Nullable="false" />
+          <Property Name="deleted" Type="bit" />
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="Expr1" Type="int" Nullable="false" />
+          <Property Name="ShiftId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__JobShift__JobId__49C3F6B7">
           <End Role="JobSchedule" Type="Self.JobSchedule" Multiplicity="0..1">
@@ -328,9 +327,9 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
     [JobShiftsView].[EnterTime] AS [EnterTime], 
     [JobShiftsView].[ExitTime] AS [ExitTime], 
     [JobShiftsView].[MadadkarId] AS [MadadkarId], 
-    [JobShiftsView].[ShiftId] AS [ShiftId], 
+    [JobShiftsView].[deleted] AS [deleted], 
     [JobShiftsView].[id] AS [id], 
-    [JobShiftsView].[Expr1] AS [Expr1]
+    [JobShiftsView].[ShiftId] AS [ShiftId]
     FROM [dbo].[JobShiftsView] AS [JobShiftsView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__JobShift__JobId__49C3F6B7" Association="Self.FK__JobShift__JobId__49C3F6B7">
@@ -648,7 +647,6 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
             <PropertyRef Name="MadadkarId" />
             <PropertyRef Name="ShiftId" />
             <PropertyRef Name="id" />
-            <PropertyRef Name="Expr1" />
           </Key>
           <Property Name="JobDate" Type="DateTime" Precision="0" />
           <Property Name="ShiftStartTime" Type="Time" Precision="7" />
@@ -659,7 +657,7 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
           <Property Name="MadadkarId" Type="Int32" Nullable="false" />
           <Property Name="ShiftId" Type="Int32" Nullable="false" />
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="Expr1" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="settings">
           <Key>
@@ -883,7 +881,7 @@ warning 6002: The table/view 'madadkar_online.dbo.JobShiftsView' does not have a
           <EntitySetMapping Name="JobShiftsView">
             <EntityTypeMapping TypeName="madadkar_onlineModel.JobShiftsView">
               <MappingFragment StoreEntitySet="JobShiftsView">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
                 <ScalarProperty Name="MadadkarId" ColumnName="MadadkarId" />

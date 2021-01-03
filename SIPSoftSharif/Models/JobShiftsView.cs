@@ -23,6 +23,6 @@ namespace SIPSoftSharif.Models
         public int MadadkarId { get; set; }
         public int ShiftId { get; set; }
         public int id { get; set; }
-        public int Expr1 { get; set; }
+        public Nullable<bool> deleted { get; set; }
     }
 }

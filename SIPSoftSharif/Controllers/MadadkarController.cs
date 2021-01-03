@@ -787,7 +787,7 @@ namespace SIPSoftSharif.Controllers
 
         //رزرو شیفت کاری برا ی مددکار
         [HttpPost]
-        [Route("api/Job/AddShiftForMadadkar")]
+        [Route("api/Job/AddShiftForMadadkar1")]
         public IHttpActionResult AddShiftForMadadkar(int shiftid,int madadkarId)
         {
            if(DateTime.Now.Hour>=12 && DateTime.Now.Hour <= 21)
@@ -813,7 +813,7 @@ namespace SIPSoftSharif.Controllers
 
         //گرفتن ساعت مجاز
         [HttpPost]
-        [Route("api/Job/GetClock")]
+        [Route("api/Job/GetClock1")]
         public IHttpActionResult getClock()
         {
             if (DateTime.Now.Hour>=12 && DateTime.Now.Hour <= 21)
@@ -825,7 +825,7 @@ namespace SIPSoftSharif.Controllers
 
         //حذف شیفت کاری برای مددکار
         [HttpPost]
-        [Route("api/Job/RemoveShiftForMadadkar")]
+        [Route("api/Job/RemoveShiftForMadadkar1")]
         public IHttpActionResult RemoveShiftForMadadkar(int shiftid, int madadkarId)
         {
             if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour <= 21)
