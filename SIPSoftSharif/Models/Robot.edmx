@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BpmsShrifRobotModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FG_Madadjus">
+          <Key>
+            <PropertyRef Name="MadadjuId" />
+          </Key>
+          <Property Name="MadadjuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MadadjuConfirm" Type="bit" />
+          <Property Name="MadadjuCode" Type="int" />
+          <Property Name="MadadjuFName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuLName" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuGen" Type="int" />
+          <Property Name="MadadjuSiad" Type="bit" />
+          <Property Name="MadadjuStatusId" Type="int" />
+          <Property Name="MadadjuBirthdate" Type="nvarchar" MaxLength="10" />
+          <Property Name="MadadjuBirthplace" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuPhone" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuMobile" Type="nvarchar" MaxLength="30" />
+          <Property Name="MadadjuNote" Type="nvarchar(max)" />
+          <Property Name="MadadjuDetail" Type="nvarchar(max)" />
+          <Property Name="MadadjuImage" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuImage1" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuImage2" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuImage3" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuImage4" Type="nvarchar" MaxLength="250" />
+          <Property Name="MadadjuImage5" Type="nvarchar" MaxLength="250" />
+          <Property Name="SaveDate" Type="smalldatetime" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="MadadjuSecurity" Type="nvarchar" MaxLength="36" />
+          <Property Name="MadadjuBirthCity" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="FG_MadadjuStatus">
+          <Key>
+            <PropertyRef Name="MadadjuStatusId" />
+          </Key>
+          <Property Name="MadadjuStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Deleted" Type="bit" />
+        </EntityType>
+        <EntityContainer Name="BpmsShrifRobotModelStoreContainer">
+          <EntitySet Name="FG_Madadjus" EntityType="Self.FG_Madadjus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FG_MadadjuStatus" EntityType="Self.FG_MadadjuStatus" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BpmsShrifRobotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FG_Madadjus">
+          <Key>
+            <PropertyRef Name="MadadjuId" />
+          </Key>
+          <Property Name="MadadjuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MadadjuConfirm" Type="Boolean" />
+          <Property Name="MadadjuCode" Type="Int32" />
+          <Property Name="MadadjuFName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuLName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuGen" Type="Int32" />
+          <Property Name="MadadjuSiad" Type="Boolean" />
+          <Property Name="MadadjuStatusId" Type="Int32" />
+          <Property Name="MadadjuBirthdate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuBirthplace" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuMobile" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage2" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage3" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage4" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuImage5" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SaveDate" Type="DateTime" Precision="0" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="MadadjuSecurity" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="MadadjuBirthCity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FG_MadadjuStatus">
+          <Key>
+            <PropertyRef Name="MadadjuStatusId" />
+          </Key>
+          <Property Name="MadadjuStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+        </EntityType>
+        <EntityContainer Name="BpmsShrifRobotEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FG_Madadjus" EntityType="Self.FG_Madadjus" />
+          <EntitySet Name="FG_MadadjuStatus" EntityType="Self.FG_MadadjuStatus" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BpmsShrifRobotModelStoreContainer" CdmEntityContainer="BpmsShrifRobotEntities">
+          <EntitySetMapping Name="FG_Madadjus">
+            <EntityTypeMapping TypeName="BpmsShrifRobotModel.FG_Madadjus">
+              <MappingFragment StoreEntitySet="FG_Madadjus">
+                <ScalarProperty Name="MadadjuId" ColumnName="MadadjuId" />
+                <ScalarProperty Name="MadadjuConfirm" ColumnName="MadadjuConfirm" />
+                <ScalarProperty Name="MadadjuCode" ColumnName="MadadjuCode" />
+                <ScalarProperty Name="MadadjuFName" ColumnName="MadadjuFName" />
+                <ScalarProperty Name="MadadjuLName" ColumnName="MadadjuLName" />
+                <ScalarProperty Name="MadadjuGen" ColumnName="MadadjuGen" />
+                <ScalarProperty Name="MadadjuSiad" ColumnName="MadadjuSiad" />
+                <ScalarProperty Name="MadadjuStatusId" ColumnName="MadadjuStatusId" />
+                <ScalarProperty Name="MadadjuBirthdate" ColumnName="MadadjuBirthdate" />
+                <ScalarProperty Name="MadadjuBirthplace" ColumnName="MadadjuBirthplace" />
+                <ScalarProperty Name="MadadjuPhone" ColumnName="MadadjuPhone" />
+                <ScalarProperty Name="MadadjuMobile" ColumnName="MadadjuMobile" />
+                <ScalarProperty Name="MadadjuNote" ColumnName="MadadjuNote" />
+                <ScalarProperty Name="MadadjuDetail" ColumnName="MadadjuDetail" />
+                <ScalarProperty Name="MadadjuImage" ColumnName="MadadjuImage" />
+                <ScalarProperty Name="MadadjuImage1" ColumnName="MadadjuImage1" />
+                <ScalarProperty Name="MadadjuImage2" ColumnName="MadadjuImage2" />
+                <ScalarProperty Name="MadadjuImage3" ColumnName="MadadjuImage3" />
+                <ScalarProperty Name="MadadjuImage4" ColumnName="MadadjuImage4" />
+                <ScalarProperty Name="MadadjuImage5" ColumnName="MadadjuImage5" />
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="MadadjuSecurity" ColumnName="MadadjuSecurity" />
+                <ScalarProperty Name="MadadjuBirthCity" ColumnName="MadadjuBirthCity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FG_MadadjuStatus">
+            <EntityTypeMapping TypeName="BpmsShrifRobotModel.FG_MadadjuStatus">
+              <MappingFragment StoreEntitySet="FG_MadadjuStatus">
+                <ScalarProperty Name="MadadjuStatusId" ColumnName="MadadjuStatusId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

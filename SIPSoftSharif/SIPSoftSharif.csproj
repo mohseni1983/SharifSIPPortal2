@@ -169,6 +169,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\Robot.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Robot.edmx</DependentUpon>
+      <LastGenOutput>Robot.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Robot.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Robot.edmx</DependentUpon>
+      <LastGenOutput>Robot.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Sharif.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Sharif.edmx</DependentUpon>
@@ -228,8 +238,14 @@
     <Compile Include="Models\FG_Hamis.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FG_Madadjus.cs">
+      <DependentUpon>Robot.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FG_MadadjusInfo2.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FG_MadadjuStatus.cs">
+      <DependentUpon>Robot.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FG_Madadkars.cs">
       <DependentUpon>SharifData.tt</DependentUpon>
@@ -267,6 +283,21 @@
     </Compile>
     <Compile Include="Models\PhoneChange.cs">
       <DependentUpon>SIP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Robot.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Robot.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Robot.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Robot.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Robot.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Robot.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\settings.cs">
       <DependentUpon>SIP.tt</DependentUpon>
@@ -375,6 +406,13 @@
     </EntityDeploy>
     <Content Include="Models\SIP.edmx.diagram">
       <DependentUpon>SIP.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Robot.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Robot.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Robot.edmx.diagram">
+      <DependentUpon>Robot.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />

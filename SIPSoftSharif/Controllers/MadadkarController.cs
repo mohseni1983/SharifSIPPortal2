@@ -39,7 +39,7 @@ namespace SIPSoftSharif.Controllers
         //دریافت لیست حامیان در نسخه دوم
        [Authorize(Roles ="Madadkar")]
         [HttpPost]
-        [Route("api/Madadkar/GetHamisForEdit")]
+        [Route("api/Madadkar/GetHamisForEdit2")]
         public IHttpActionResult GetHamisForEdit()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -450,7 +450,7 @@ namespace SIPSoftSharif.Controllers
 
         //دریافت لیست کودکان
         [HttpPost]
-        [Route("api/Madadkar/GetMadadjouList")]
+        [Route("api/Madadkar/GetMadadjouList2")]
         public IHttpActionResult GetMadadjouList()
         {
             try

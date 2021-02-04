@@ -24,6 +24,31 @@ namespace SIPSoftSharif.Controllers
         ///بانک اطلاعاتی مربوط به اطلاعات نرم افزار مددکار آنلاین
         MadadkarOnlineEntities SipDataEntity = new MadadkarOnlineEntities();
 
+        BpmsShrifRobotEntities RobotEntities = new BpmsShrifRobotEntities();
+
+
+        public class MadadjouSearch
+        {
+            public int Status { get; set; }
+            public bool IsSeyed { get; set; }
+            public int Gender { get; set; }
+            public String City { get; set; }
+
+        }
+
+        [HttpPost]
+        [Route("api/v2/Madadjou/GetRobotMadadjou")]
+        public IHttpActionResult GetRobotMadadjou(MadadjouSearch search)
+        {
+            var s=RobotEntities.FG_Madadjus.Where(x => x.MadadjuBirthCity.Contains(search.City) &&
+            x.MadadjuGen == search.Gender && x.MadadjuSiad == search.IsSeyed && x.MadadjuStatusId == search.Status && x.MadadjuConfirm==true && x.Deleted==false).ToList();
+            if (s.Count == 0)
+                return NotFound();
+            
+            return Ok(s);
+        }
+
+
 
         /// <summary>
         /// دریافت لیست کودکان
